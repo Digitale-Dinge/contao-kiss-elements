@@ -1,0 +1,35 @@
+{% extends '@Contao/content_element/gallery.html.twig' %}
+
+{% set kiss_swiper = true %}
+{% set list = images %}
+
+{% set slider_settings = {
+    slidesPerView: 2,
+    spaceBetween: 24,
+    grid: {
+        rows: 2,
+        fill: 'row',
+    },
+    rewind: true,
+    autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
+    },
+    speed: 500,
+    allowTouchMove: false,
+    navigation: false,
+    pagination: false,
+    breakpoints: {
+        768: {slidesPerView: 3, grid: {rows: 2, fill: 'row'}},
+        1024: {slidesPerView: 4, grid: {rows: 2, fill: 'row'}},
+    },
+} %}
+
+{% set slider_attributes = attrs(slider_attributes|default).addClass('swiper-logos') %}
+{% set slide_attributes = attrs(slide_attributes|default).addClass(['flex', 'items-center', 'justify-center', 'p-4']) %}
+
+{% block item %}
+    {% with {figure: item} %}{{ block('figure_component') }}{% endwith %}
+{% endblock %}
+
+{% block controls %}{% endblock %}

@@ -1,0 +1,34 @@
+/* Counter List Component */
+
+.counter-item {
+    @apply text-center;
+}
+
+.counter-item__media {
+    @apply w-20 h-20 mx-auto overflow-hidden rounded-full mb-2;
+
+    img {
+        @apply w-full h-full object-cover;
+    }
+}
+
+.counter-item__icon {
+    @apply w-12 h-12 mx-auto mb-2;
+    @apply text-primary-solid;
+
+    svg {
+        @apply w-full h-full;
+    }
+}
+
+.counter-item__value {
+    @apply font-bold;
+    @apply text-primary-solid;
+
+    font-variant-numeric: tabular-nums;
+}
+
+.counter-item__label {
+    @apply text-base md:text-lg;
+    @apply text-neutral-on-strong;
+}

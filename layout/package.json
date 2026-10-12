@@ -1,0 +1,17 @@
+{
+    "name": "@digitaledinge/contao-kiss-elements",
+    "license": "PolyForm-Noncommercial-1.0.0",
+    "type": "module",
+    "exports": {
+        ".": "./scripts/index.js",
+        "./css": {
+            "style": "./css/index.pcss"
+        }
+    },
+    "dependencies": {
+        "countup.js": "^2.10.0"
+    },
+    "peerDependencies": {
+        "@hotwired/stimulus": "^3.2"
+    }
+}

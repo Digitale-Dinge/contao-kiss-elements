@@ -1,0 +1,49 @@
+{% set social_wrapper_attributes = attrs()
+    .addClass([
+        'company_social-media',
+        'list-none', 'px-0',
+        'flex', 'gap-x-6', 'justify-center',
+        'border-neutral-border-strong', 'border-t', 'border-b', 'py-4', 'my-4',
+        'sm:flex-col', 'sm:border-0', 'sm:p-0', 'sm:m-0',
+    ])
+    .mergeWith(social_wrapper_attributes|default)
+%}
+
+<div class="col_socials">
+    {# ToDo: We don't allow other social media right now due to not having all icons #}
+    {% set allowed_social_icons = [
+        'apple',
+        'facebook',
+        'google',
+        'instagram',
+        'linkedin',
+        'tiktok',
+        'xing',
+        'youtube',
+    ] %}
+
+    {% set socials = company_socials|default(company.socials)|deserialize %}
+    {% if socials|length > 0 %}
+        <ul{{ social_wrapper_attributes }}>
+            {% for row in socials %}
+                {%- if row.social|default in allowed_social_icons %}
+                    <li>
+                        {% embed '@Contao/company/component/_link.html.twig' with {
+                            link: row.social,
+                            href: row.url,
+                            title: row.social,
+                            target_blank: true,
+                        } %}
+                            {% block link_inner %}
+                                {{ include('@Contao/kiss_component/media/_icon_include.html.twig', {
+                                    icon: 'public/kiss_icons/svg/logo-' ~ row.social ~ '.svg',
+                                }) }}
+                                <span class="sr-only">{{ parent() }}</span>
+                            {% endblock %}
+                        {% endembed %}
+                    </li>
+                {% endif -%}
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>

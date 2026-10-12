@@ -1,0 +1,28 @@
+/* Steps List Component */
+
+.steps-list__item {
+    @apply relative isolate grid grid-cols-[auto_1fr] gap-x-6 pb-8 md:pb-12;
+
+    > .headline {
+        @apply col-span-full grid grid-cols-subgrid items-start;
+    }
+
+    > .rte {
+        @apply col-start-2;
+    }
+
+    &:not(:last-child)::before {
+        @apply absolute inset-y-0 left-1/2 -z-1 w-0.5 -translate-x-1/2 bg-primary-solid opacity-30;
+
+        content: "";
+        grid-column: 1 / 2;
+    }
+}
+
+.steps-list__number {
+    @apply flex items-center justify-center rounded-full bg-primary-solid text-primary-on-solid;
+
+    font-size: .6em;
+    width: 2.5em;
+    height: 2.5em;
+}

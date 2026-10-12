@@ -1,0 +1,48 @@
+.hero-absolute {
+    @apply pt-[130px] sm:pt-[280px];
+
+    min-height: max(38lvh, 600px);
+
+    &:has(>.media) {
+        min-height: max(50lvh, 800px);
+    }
+
+    figure {
+        position: relative;
+        overflow: hidden;
+        height: 100%;
+
+        &::after {
+            content: '';
+            display: block;
+            background-color: var(--kiss-sys-color-neutral-surface-1);
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: .8;
+        }
+    }
+
+    img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    /* Video hero: mirror the image's dimming overlay so overlaid text stays readable. */
+    .media:has(> video)::after {
+        content: '';
+        display: block;
+        background-color: var(--kiss-sys-color-neutral-surface-1);
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: .8;
+    }
+
+    video {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+}

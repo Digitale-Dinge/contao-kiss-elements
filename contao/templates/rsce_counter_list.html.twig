@@ -1,0 +1,48 @@
+{% use '@Contao/kiss_component/media/_icon.html.twig' %}
+{% use '@Contao/kiss_component/media/_image.html.twig' %}
+{% extends '@Contao/content_element/_base.html.twig' %}
+
+{% set list_wrapper_attributes = attrs(list_wrapper_attributes|default)
+    .set('data-controller', 'countup')
+    .setIfExists('data-countup-duration-value', duration|default)
+%}
+
+{% set attributes = attrs(attributes|default).addClass('counter_list') %}
+{% set text_appearance = styles.font_appearance(textAppearance|default)|default(styles.heading(textAppearance|default)) %}
+
+{%- block counter_item -%}
+    <div class="counter-item">
+        {# Image #}
+        {% if item.mode|default == 'image' %}
+            <div class="counter-item__media">
+                {{ block('image') }}
+            </div>
+        {% endif %}
+
+        {# Icon #}
+        {% if item.mode|default == 'icon' %}
+            <div class="counter-item__icon">
+                {{ block('icon') }}
+            </div>
+        {% endif %}
+
+        {% set counter_item_attributes = attrs(counter_item_attributes|default)
+            .addClass(['counter-item__value', '!mb-0', text_appearance])
+            .set('data-countup-target', 'counter')
+            .set('data-value', item.value|default(0))
+            .setIfExists('data-prefix', item.prefix|default)
+            .setIfExists('data-suffix', item.suffix|default)
+            .setIfExists('data-separator', separator|default)
+        %}
+        <span{{ counter_item_attributes }}>
+            {{ item.prefix }}0{{ item.suffix|default }}
+        </span>
+        <p class="counter-item__label">{{ item.label|default }}</p>
+    </div>
+{%- endblock -%}
+
+{% block content %}
+    {% for item in list %}
+        {{ block('counter_item') }}
+    {% endfor %}
+{% endblock %}

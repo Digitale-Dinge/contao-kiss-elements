@@ -1,0 +1,164 @@
+{% use '@Contao/kiss_attributes/_card_attributes.html.twig' %}
+{% use '@Contao/kiss_component/media/_image.html.twig' %}
+{% extends '@Contao/content_element/_base.html.twig' %}
+
+{% set attributes = attrs(attributes|default).addClass('team_list') %}
+
+{% set card_body_attributes = attrs()
+    .addClass(['card-body', 'gap-4']).mergeWith(card_body_attributes|default)
+%}
+
+{# ToDo: We don't allow other social media right now due to not having all icons #}
+{% set allowed_social_icons = [
+    'apple',
+    'facebook',
+    'google',
+    'instagram',
+    'linkedin',
+    'tiktok',
+    'xing',
+    'youtube',
+] %}
+
+{% block team_card %}
+    {% set socials = (item.socials|default)|deserialize|default([]) %}
+
+    <div{{ block('card_attributes') }}>
+        {# Image #}
+        {% if item.singleSRC|default %}
+            <div class="card-media">
+                {% with {img_class: 'w-full'} %}{{ block('image') }}{% endwith %}
+            </div>
+        {% endif %}
+
+        <div{{ card_body_attributes }}>
+            <div>
+                {% if item.title|default %}
+                    <h4 class="font-bold mb-2! text-primary-solid">{{ item.title }}</h4>
+                {% endif %}
+
+                {% if item.occupation|default %}
+                    <p class="m-0!">{{ item.occupation }}</p>
+                {% endif %}
+            </div>
+
+            <div class="flex items-center gap-3 shrink-0">
+                {# Biografie button – opens GLightbox inline modal #}
+                {% if item.text|default %}
+                    <a href="#biografie-{{ loop.index }}" class="btn btn-outline" data-lightbox="inline">{{ 'rsce_team.bio_button'|trans({}, 'rsce') }}</a>
+                {% endif %}
+
+                {# Social icons #}
+                {% for row in socials %}
+                    {% if row.social|default in allowed_social_icons %}
+                        {% embed '@Contao/company/component/_link.html.twig' with {
+                            row,
+                            link: row.social,
+                            href: row.url|default,
+                            title: row.social|capitalize,
+                            class: 'svg-size--normal',
+                            target_blank: true,
+                        } only %}
+                            {% block link_inner %}
+                                {{ include('@Contao/kiss_component/media/_icon_include.html.twig', {
+                                    icon: 'public/kiss_icons/svg/logo-' ~ row.social ~ '.svg',
+                                }) }}
+                                <span class="sr-only">{{ parent() }}</span>
+                            {% endblock %}
+                        {% endembed %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        {# Hidden inline content for GLightbox #}
+        {% if item.text|default %}
+            <div id="biografie-{{ loop.index }}" class="hidden">
+                <div class="p-8 max-w-3xl">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        {# Left: image + contact info #}
+                        <div class="shrink-0 md:w-64">
+                            {% if item.singleSRC|default %}
+                                <div class="overflow-hidden mb-4">
+                                    {{ include('@Contao/kiss_component/media/_image.html.twig') }}
+                                </div>
+                            {% endif %}
+
+                            {# Name + position #}
+                            {% if item.title|default %}
+                                <h3 class="fixed-title-sm text-primary-solid m-0">{{ item.title }}</h3>
+                            {% endif %}
+                            {% if item.occupation|default %}
+                                <p class="text-sm mt-1">{{ item.occupation }}</p>
+                            {% endif %}
+                            {% if item.year|default %}
+                                <p class="text-xs opacity-60 mt-1">{{ _self.member_since(data.company|default(0), item.year) }}</p>
+                            {% endif %}
+
+                            {# Contact #}
+                            {% if item.email|default or item.phone|default %}
+                                <div class="flex flex-col gap-2 mt-4 pt-4 border-t border-neutral-surface-3">
+                                    {% if item.email|default %}
+                                        <a href="mailto:{{ item.email }}" class="link link-sm flex items-center gap-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 shrink-0"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                                            {{ item.email }}
+                                        </a>
+                                    {% endif %}
+                                    {% if item.phone|default %}
+                                        <a href="tel:{{ item.phone }}" class="link link-sm flex items-center gap-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 shrink-0"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                            {{ item.phone }}
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+
+                            {# Social links #}
+                            {% if socials is iterable and socials|length > 0 %}
+                                <div class="flex items-center gap-3 mt-4 pt-4 border-t border-neutral-surface-3">
+                                    {% for row in socials %}
+                                        {% if row.social|default in allowed_social_icons %}
+                                            {% embed '@Contao/company/component/_link.html.twig' with {
+                                                row,
+                                                link: row.social,
+                                                href: row.url|default,
+                                                title: row.social|capitalize,
+                                                class: 'svg-size--normal',
+                                                target_blank: true,
+                                            } only %}
+                                                {% block link_inner %}
+                                                    {{ include('@Contao/kiss_component/media/_icon_include.html.twig', {
+                                                        icon: 'public/kiss_icons/svg/logo-' ~ row.social ~ '.svg',
+                                                    }) }}
+                                                    <span class="sr-only">{{ parent() }}</span>
+                                                {% endblock %}
+                                            {% endembed %}
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        {# Right: biography text #}
+                        <div class="flex-1">
+                            <h4 class="fixed-title-sm mb-4">{{ 'rsce_team.bio_heading'|trans({}, 'rsce') }}</h4>
+                            <div class="prose prose-sm">
+                                {{ item.text|sanitize_html('contao')|csp_inline_styles|encode_email|insert_tag_raw }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block content %}
+    {% for item in list %}
+        {{ block('team_card') }}
+    {% endfor %}
+{% endblock %}
+
+{% macro member_since(company_id, year) %}
+    {{- 'rsce_team.member_year'|trans({'%company%': company.getName(company_id)}, 'rsce') }} {{ year -}}
+{% endmacro %}

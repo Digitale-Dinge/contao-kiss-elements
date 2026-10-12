@@ -1,0 +1,48 @@
+{% extends '@Contao/content_element/_base.html.twig' %}
+{% use '@Contao/kiss_component/media/_media_text.html.twig' %}
+
+{% set attributes = attrs(attributes|default).addClass([
+    'text-neutral-on-strong',
+    'hero-absolute',
+    'relative',
+    'flex',
+    'items-end',
+    'pb-10',
+    'sm:pb-20',
+    styles.background(backgroundColor|default),
+]) %}
+
+{% set type = mediaType|default('image') %}
+
+{% set video_attributes = attrs(video_attributes|default).addClass(['h-full', 'w-full', 'object-cover']) %}
+
+{# Video hero LCP fix: paint the editor-set poster instantly (LCP-eligible) while the video streams
+   in behind it. Only {% set %} out here (this template extends _base); the preload <link> is emitted
+   inside the `inner` block below. #}
+{% if type == 'video' and posterSRC|default %}
+    {% set poster_figure = figure(posterSRC, size|default) %}
+    {% if poster_figure|default %}
+        {% set poster_src = poster_figure.image.img.src %}
+        {% set video_attributes = video_attributes.set('poster', poster_src) %}
+    {% endif %}
+{% endif %}
+
+{% set media_attributes = attrs(media_attributes|default).addClass(['absolute', 'inset-0']) %}
+{% set text_attributes = attrs(text_attributes|default).addClass(['relative', 'flex-grow', 'z-10', styles.container]) %}
+
+{% block headline %}
+    {% if headline.text %}
+        {{ block('headline_component') }}
+    {% endif %}
+{% endblock %}
+
+{%- block inner %}
+    {% if poster_src|default %}
+        {% add 'hero_poster_preload' to head %}
+            <link rel="preload" as="image" fetchpriority="high" href="{{ poster_src }}">
+        {% endadd %}
+    {% endif %}
+    {% block content %}
+        {{ block('media_text') }}
+    {% endblock %}
+{% endblock -%}

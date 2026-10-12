@@ -1,0 +1,56 @@
+{% use '@Contao/component/_headline.html.twig' %}
+{% extends '@Contao/content_element/_base.html.twig' %}
+
+{% set horizontal = stepsLayout|default == 'horizontal' %}
+
+{% block content_wrapper %}
+    {% with {
+        gridColumns: horizontal ? ['one', 'two', 'three', 'four', 'five', 'six'][list|length - 1]|default('six'),
+        gridGap: horizontal ? 'large',
+    } %}
+        {{ parent() }}
+    {% endwith %}
+{% endblock %}
+
+{%- block headline_inner -%}
+    {% if item.headline is defined and not horizontal %}
+        <span class="steps-list__number">{{ loop.index }}</span>
+        <span>{{ parent() }}</span>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{%- endblock -%}
+
+{% block step_text %}
+    {% if item.headline.value|default %}
+        {{ block('headline_component') }}
+    {% endif %}
+    {% if item.text|default %}
+        {% with {item, text: item.text} only %}
+            {{ include('@Contao/component/_rich_text.html.twig') }}
+        {% endwith %}
+    {% endif %}
+{% endblock %}
+
+{% block step_item %}
+    <div class="steps-list__item">
+        {{ block('step_text') }}
+    </div>
+{% endblock %}
+
+{% block step_item_horizontal %}
+    <div>
+        <div class="responsive-display-sm opacity-60 mb-4">{{ loop.index }}</div>
+        {{ block('step_text') }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    {% for item in list %}
+        {% if horizontal %}
+            {{ block('step_item_horizontal') }}
+        {% else %}
+            {{ block('step_item') }}
+        {% endif %}
+    {% endfor %}
+{% endblock %}

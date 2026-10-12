@@ -1,0 +1,116 @@
+rsce_team:
+    member_year: Bei %company% seit
+    member_education: Ausbildung
+    bio_button: Biografie
+    bio_heading: Biografie
+    picture: Foto
+    pictures: Fotos
+    picture_open: 'Foto #{number} öffnen'
+    contact_form: Kontaktformular
+    share: Teilen
+    attachments: Anhänge
+    share_Linkedin: Auf LinkedIn teilen
+    share_Xing: Auf Xing teilen
+    share_Facebook: Auf Facebook teilen
+    send_Mail: Per E-Mail senden
+    press_contact: Pressekontakt
+
+rsce:
+    hero:
+        label: Hero-Element
+        description: Ein Hero-Element für die Seite
+
+    steps_list:
+        label: Schritte-Liste
+        description: Aufzählung von Schritten mit Text und Überschriften.
+        field:
+            stepsLayout:
+                label: Layout
+                description: Wählen Sie, ob die Schritte untereinander oder nebeneinander angeordnet werden.
+                options:
+                    vertical: Vertikal
+                    horizontal: Horizontal
+
+    team_list:
+        label: Team-Liste
+        description: Auflistung von Team-Mitgliedern mit Details.
+        field:
+            title:
+                label: Name
+                description: Hier können Sie den Namen des Teammitglieds eintragen.
+            occupation:
+                label: Position
+                description: Hier können Sie die Position eintragen.
+            year:
+                label: Jahr
+                description: Jahr der Einstellung
+
+    quote:
+        label: Zitat
+        description: Ein Zitat mit Portrait-Bild und Autorenangabe.
+
+    icon_headline_list:
+        label: Icon-Headline-Liste
+        description: Eine Liste von Elementen mit Icon, Überschrift und Text in einem Raster.
+        field:
+            columns:
+                label: Spalten
+                description: Anzahl der Spalten im Raster.
+
+    history_item_list:
+        label: Historie
+        description: Zeitstrahl mit historischen Ereignissen als Slider.
+        field:
+            year:
+                label: Jahr
+                description: Die Jahreszahl des historischen Ereignisses (wird nicht angezeigt, nur zur Sortierung)
+
+    counter_list:
+        label: Counter-Liste
+        description: Animierte Zähler, die beim Scrollen hochzählen.
+        field:
+            columns:
+                label: Spalten
+                description: Anzahl der Spalten im Raster.
+            separator:
+                label: Tausender-Trennzeichen
+                description: Hier können Sie das Tausender-Trennzeichen auswählen.
+            duration:
+                label: Animationsdauer
+                description: Dauer der Zähl-Animation in Sekunden.
+            value:
+                label: Zahl
+                description: Die Zahl, bis zu welcher hochgezählt werden soll.
+            prefix:
+                label: Präfix
+                description: Text, der vor der Zahl angezeigt wird.
+            suffix:
+                label: Suffix
+                description: Text, der nach der Zahl angezeigt wird.
+            label:
+                label: Label
+                description: Beschriftung unter dem Zähler.
+
+    field:
+        mediaType:
+            label: Medientyp
+            description: Wählen Sie, ob das Hero-Element ein Bild oder ein Video anzeigt.
+            options:
+                image: Bild
+                video: Video
+        mode:
+            label: Modus
+            description: Wählen Sie den Darstellungsmodus.
+            options:
+                default: Standard
+                image: Bild
+                icon: Icon
+        name_position:
+            label: Name & Position
+            description: Hier können Sie den Namen und die Position eintragen.
+        quote_suffix:
+            label: Suffix
+            description: Hier können Sie einen Suffix eintragen.
+        quote:
+            label: Zitat
+            description: Hier können Sie das Zitat eintragen.

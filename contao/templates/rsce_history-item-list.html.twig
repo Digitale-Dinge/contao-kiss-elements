@@ -1,0 +1,127 @@
+{% use '@Contao/kiss_component/media/_image.html.twig' %}
+{% extends '@Contao/content_element/swiper.html.twig' %}
+
+{% block item %}
+    <div class="swiper-slide history-slide">
+        <div class="history-slide__inner">
+            {% if item.singleSRC|default %}
+                <div class="history-slide__image w-full">
+                    {{ block('image') }}
+                </div>
+            {% endif %}
+
+            <div class="history-slide__body mt-4 md:mt-8">
+                {% if item.topline|default %}
+                    <p class="topline">{{ item.topline }}</p>
+                {% endif %}
+
+                {% if item.headline.value|default %}
+                    <{{ item.headline.unit|default('h3') }}{{ attrs().addClass(['headline', styles.size(item.headline.appearance|default)|default(styles.heading(item.headline.appearance|default))]) }}>
+                        {{ item.headline.value }}
+                    </{{ item.headline.unit|default('h3') }}>
+                {% endif %}
+
+                {% if item.text|default %}
+                    <div class="history-slide__text">
+                        {{ item.text|sanitize_html('contao')|csp_inline_styles|encode_email|insert_tag_raw }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block slides %}
+    {% if list|default|length > 1 %}
+        {% for item in list %}
+            {{ block('item') }}
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+
+{% block controls %}
+    {% if not as_editor_view %}
+        <div class="history-controls">
+            <hr class="history-separator">
+            <div class="history-nav-buttons">
+                <button class="history-btn-prev" type="button" aria-label="Previous slide">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 12H5M12 19l-7-7 7-7"/>
+                    </svg>
+                </button>
+                <button class="history-btn-next" type="button" aria-label="Next slide">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block init_options %}
+    navigation: {
+        prevEl: '.history-btn-prev',
+        nextEl: '.history-btn-next',
+    },
+    on: {
+        init: function() {
+            const swiper = this;
+            const container = swiper.el.parentElement;
+            updateTimelineActive(swiper, container);
+        },
+        slideChange: function() {
+            const swiper = this;
+            const container = swiper.el.parentElement;
+            updateTimelineActive(swiper, container);
+        }
+    },
+{% endblock %}
+
+{% block script %}
+    {{ parent() }}
+
+    <script>
+        function updateTimelineActive(swiper, container) {
+            if (!container) return;
+            container.querySelectorAll('.history-timeline__item').forEach(function(item, index) {
+                if (index === swiper.activeIndex) {
+                    item.classList.add('is-active');
+                } else {
+                    item.classList.remove('is-active');
+                }
+            });
+        }
+    </script>
+{% endblock %}
+
+{% block content_wrapper %}
+    {{ block('content') }}
+{% endblock %}
+
+{% block content %}
+    {# Timeline indicator #}
+    {% if list|default|length > 1 %}
+        <nav class="history-timeline">
+            <ul class="history-timeline__nav">
+            {% for item in list %}
+                <li class="history-timeline__item{% if loop.first %} is-active{% endif %}">
+                    <div class="history-timeline__indicator">
+                        <span class="history-timeline__dot"></span>
+                        <span class="history-timeline__year">{{ item.year|default }}</span>
+                    </div>
+                </li>
+                {% if not loop.last %}
+                    <div class="history-timeline__line"></div>
+                {% endif %}
+            {% endfor %}
+            </ul>
+        </nav>
+    {% endif %}
+
+    {% set slider_settings = {
+        initialSlide: 0,
+        loop: false,
+    } %}
+    {{ parent() }}
+{% endblock %}

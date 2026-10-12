@@ -1,0 +1,152 @@
+/* History Timeline Styles */
+
+/* Swiper-based timeline with year navigation */
+
+.history-timeline__nav {
+    @apply flex items-start justify-between;
+    @apply py-4;
+
+    /* Reset list styles */
+    list-style: none;
+    margin: 0;
+    padding-inline: 0;
+}
+
+/* Line between dots - actual HTML element */
+.history-timeline__line {
+    @apply h-[2px] bg-neutral-surface-2;
+    @apply grow;
+
+    margin-top: 0.5rem; /* Half of dot height (1rem / 2) to center with dot */
+}
+
+.history-timeline__item {
+    @apply shrink-0;
+}
+
+.history-timeline__indicator {
+    @apply flex flex-col items-center;
+    @apply pointer-events-none;
+}
+
+.history-timeline__year {
+    @apply text-sm md:text-base;
+    @apply text-neutral-surface-2;
+    @apply transition-colors duration-300;
+}
+
+.history-timeline__dot {
+    @apply w-4 h-4;
+    @apply rounded-full;
+    @apply bg-neutral-surface-2;
+    @apply border-2 border-neutral-surface-2;
+    @apply transition-all duration-300;
+    @apply shrink-0;
+}
+
+/* Active state */
+.history-timeline__item.is-active {
+    .history-timeline__year {
+        @apply text-primary-solid;
+    }
+
+    .history-timeline__dot {
+        @apply bg-primary-solid;
+        @apply border-primary-solid;
+        @apply scale-125;
+    }
+}
+
+/* ============================================================ */
+
+/* HISTORY SLIDE STYLES */
+
+/* ============================================================ */
+
+.history-slide {
+    @apply px-0;
+
+    .card {
+        @apply mx-auto;
+    }
+}
+
+.history-slide__inner {
+    @apply flex flex-col;
+}
+
+.history-slide__image {
+    @apply w-full;
+
+    figure {
+        @apply w-full;
+    }
+
+    img {
+        @apply w-full h-auto object-cover;
+    }
+}
+
+
+
+.history-slide__text {
+    @apply responsive-headline-md;
+    @apply leading-relaxed;
+
+    p {
+        @apply mb-4;
+
+        &:last-child {
+            @apply mb-0;
+        }
+    }
+}
+
+/* ============================================================ */
+
+/* SEPARATOR + CONTROLS */
+
+/* ============================================================ */
+
+
+.history-separator {
+    @apply border-t border-neutral-surface-2;
+    @apply mt-6;
+}
+
+/* ============================================================ */
+
+/* SWIPER CONTROLS CUSTOMIZATION */
+
+/* ============================================================ */
+
+/* Custom navigation buttons container */
+.history-nav-buttons {
+    @apply flex justify-between items-center;
+    @apply my-3;
+}
+
+/* Custom button styling */
+.history-btn-prev,
+.history-btn-next {
+    @apply w-10 h-10;
+    @apply flex items-center justify-center;
+    @apply bg-transparent;
+    @apply text-primary-solid;
+    @apply border-2 border-primary-solid;
+    @apply rounded-full;
+    @apply transition-all duration-300;
+    @apply cursor-pointer;
+
+    svg {
+        @apply w-5 h-5;
+    }
+
+    &:hover {
+        @apply bg-primary-solid text-primary-on-solid;
+    }
+
+    &:disabled {
+        @apply opacity-50 cursor-not-allowed;
+    }
+}

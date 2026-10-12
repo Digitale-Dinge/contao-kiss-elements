@@ -1,0 +1,119 @@
+rsce_team:
+    member_year: At %company% since
+    member_education: Education
+    bio_button: Biography
+    bio_heading: Biography
+    picture: Photo
+    pictures: Photos
+    picture_open: Open photo #{number}
+    contact_form: Contact Form
+    share: Share
+    attachments: Attachments
+    share_Linkedin: Share on LinkedIn
+    share_Xing: Share on Xing
+    share_Facebook: Share on Facebook
+    send_Mail: Send by email
+    press_contact: Press Contact
+
+rsce:
+    hero:
+        label: Hero element
+        description: A hero element
+
+    steps_list:
+        label: Steps list
+        description: Enumerated list of steps with text and headline.
+        field:
+            stepsLayout:
+                label: Layout
+                description: Choose whether the steps are arranged vertically or horizontally.
+                options:
+                    vertical: Vertical
+                    horizontal: Horizontal
+
+    team_list:
+        label: Team list
+        description: Listing of team members with details.
+        field:
+            title:
+                label: Name
+                description: Here you can enter the name of the team member.
+            occupation:
+                label: Occupation
+                description: Here you can enter the occupation.
+            year:
+                label: Year
+                description: Year of employment
+
+    quote:
+        label: Quote
+        description: A quote with a portrait image and author attribution.
+
+    icon_headline_list:
+        label: Icon headline list
+        description: A list of items with icon, headline and text arranged in a grid.
+        field:
+            columns:
+                label: Columns
+                description: Number of columns in the grid.
+
+    history_item_list:
+        label: History
+        description: Timeline with historical events as a slider.
+        field:
+            year:
+                label: Year
+                description: The year of the historical event (not displayed, only for sorting)
+
+    counter_list:
+        label: Counter list
+        description: Animated counters that count up when scrolling into view.
+        field:
+            columns:
+                label: Columns
+                description: Number of columns in the grid.
+            separator:
+                label: Thousand separator
+                description: Choose the grouping separator for large numbers.
+            duration:
+                label: Animation duration
+                description: Duration of the count animation in seconds.
+            value:
+                label: Number
+                description: The number to count up to.
+            prefix:
+                label: Prefix
+                description: Text displayed before the number.
+            suffix:
+                label: Suffix
+                description: Text displayed after the number.
+            label:
+                label: Label
+                description: Label displayed below the counter.
+
+    group:
+        quote_group: Quote
+
+    field:
+        mediaType:
+            label: Media type
+            description: Choose whether the hero shows an image or a video.
+            options:
+                image: Image
+                video: Video
+        mode:
+            label: Mode
+            description: Choose the display mode.
+            options:
+                default: Default
+                image: Image
+                icon: Icon
+        name_position:
+            label: Name & position
+            description: Here you can add a name and a position.
+        quote_suffix:
+            label: Suffix
+            description: Here you can add a suffix.
+        quote:
+            label: Quote
+            description: Here you can add the quote.
